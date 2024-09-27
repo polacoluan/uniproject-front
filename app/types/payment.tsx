@@ -6,11 +6,8 @@ export interface Installment {
   
   export interface Payment {
     id: number;
-    studentName: string;
-    type: 'On Sight' | 'Installment';
-    amountPaid: number;
+    student_id: number;
+    payment_method_id: number;
     amount: number;
-    date: string;
-    installments: Installment[];
   }
   

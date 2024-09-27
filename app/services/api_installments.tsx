@@ -1,34 +1,34 @@
 // services/api.ts
 import axios from 'axios';
-import { Payment, Installment } from '../types/payment';
+import { Installment } from '../types/installment';
 
 const API_URL = 'http://apiato.test/v1';
 
-// Fetch all payment from the API
-export const fetchPayments = async (): Promise<Payment[]> => {
-    const response = await axios.get(`${API_URL}/payment/`);
+// Fetch all installment from the API
+export const fetchInstallments = async (): Promise<Installment[]> => {
+    const response = await axios.get(`${API_URL}/installment/`);
     return response.data.data;
 };
 
-// Fetch a single payment by ID
-export const fetchPaymentById = async (id: number): Promise<Payment> => {
-    const response = await axios.get(`${API_URL}/payment/${id}`);
+// Fetch a single installment by ID
+export const fetchInstallmentById = async (id: number): Promise<Installment> => {
+    const response = await axios.get(`${API_URL}/installment/${id}`);
     return response.data.data;
 };
 
-// Create a new payment
-export const createPayment = async (paymentData: Payment): Promise<Payment> => {
-    const response = await axios.post(`${API_URL}/payment`, paymentData);
+// Create a new installment
+export const createInstallment = async (installmentData: Installment): Promise<Installment> => {
+    const response = await axios.post(`${API_URL}/installment`, installmentData);
     return response.data.data;
 };
 
-// Update an existing payment by ID
-export const updatePayment = async (id: number, paymentData: Payment): Promise<Payment> => {
-    const response = await axios.patch(`${API_URL}/payment/${id}`, paymentData);
+// Update an existing installment by ID
+export const updateInstallment = async (id: number, installmentData: Installment): Promise<Installment> => {
+    const response = await axios.patch(`${API_URL}/installment/${id}`, installmentData);
     return response.data.data;
 };
 
-// Delete a payment by ID
-export const deletePayment = async (id: number): Promise<void> => {
-    await axios.delete(`${API_URL}/payment/${id}`);
+// Delete a installment by ID
+export const deleteInstallment = async (id: number): Promise<void> => {
+    await axios.delete(`${API_URL}/installment/${id}`);
 };

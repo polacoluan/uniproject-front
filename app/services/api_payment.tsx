@@ -1,11 +1,12 @@
 // services/api.ts
 import axios from 'axios';
-import { Payment, Installment } from '../types/payment';
+import { Payment } from '../types/payment';
+import { PaymentTable } from '../types/payment_table';
 
 const API_URL = 'http://apiato.test/v1';
 
 // Fetch all payment from the API
-export const fetchPayments = async (): Promise<Payment[]> => {
+export const fetchPayments = async (): Promise<PaymentTable[]> => {
     const response = await axios.get(`${API_URL}/payment/`);
     return response.data.data;
 };

@@ -4,9 +4,9 @@
 import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask';
 import { updatePayment, createPayment } from '../services/api_payment';
-import { Payment, Installment } from '../types/payment';
+import { Payment } from '../types/payment';
 import SelectStudents from "./SelectStudents"
-import SelectPaymentWays from "./SelectPaymentWays"
+import SelectPaymentMethods from "./SelectPaymentMethods"
 
 interface PaymentFormProps {
     payment?: Payment; // Accept a Payment object
@@ -14,14 +14,12 @@ interface PaymentFormProps {
 }
 
 const PaymentForm: React.FC<PaymentFormProps> = ({ payment, onSuccess }) => {
+
     const [formData, setFormData] = useState<Payment>({
         id: 0,
-        studentName: '',
-        amountPaid: 0,
+        student_id: 0,
         amount: 0,
-        type: 'On Sight',
-        date: '',
-        installments: []
+        payment_method_id: 0
     });
 
     useEffect(() => {
@@ -30,12 +28,9 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ payment, onSuccess }) => {
         } else {
             setFormData({
                 id: 0,
-                studentName: '',
-                amountPaid: 0,
+                student_id: 0,
                 amount: 0,
-                type: 'On Sight',
-                date: '',
-                installments: []
+                payment_method_id: 0
             });
         }
     }, [payment]);
@@ -62,12 +57,28 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ payment, onSuccess }) => {
         }
     };
 
+    // Handle payment method selection from SelectPaymentMethods
+    const handleSelectPaymentMethod = (selectedValue: number | '') => {
+        setFormData((prevData) => ({
+            ...prevData,
+            payment_method_id: selectedValue as number, // Update payment method ID in the form data
+        }));
+    };
+
+    // Handle student selection from SelectStudents
+    const handleSelectStudent = (selectedValue: number | '') => {
+        setFormData((prevData) => ({
+            ...prevData,
+            student_id: selectedValue as number, // Update student ID in the form data
+        }));
+    };
+
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
 
-            <SelectStudents></SelectStudents>
+            <SelectStudents value={formData.student_id} onSelect={handleSelectStudent} />
 
-            <SelectPaymentWays></SelectPaymentWays>
+            <SelectPaymentMethods value={formData.payment_method_id} onSelect={handleSelectPaymentMethod} />
 
             <label htmlFor="amount" className="block mb-2">Insira o valor à pagar:</label>
             <InputMask
