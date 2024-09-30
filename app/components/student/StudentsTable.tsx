@@ -1,5 +1,4 @@
-// app/components/StudentsTable.tsx
-"use client"; // Ensure this is present
+"use client";
 
 import React, { useEffect, useState } from 'react';
 import { Student } from '../../types/student';
@@ -27,7 +26,7 @@ const StudentsTable = () => {
     const handleDelete = async (id: number) => {
         try {
             await deleteStudent(id);
-            await listStudents(); // Refresh the student list after deletion
+            await listStudents();
         } catch (error) {
             console.error('Erro ao Remover Estudante:', error);
         }
@@ -48,14 +47,12 @@ const StudentsTable = () => {
         setAddModalOpen(false);
     };
 
-    // Handle form submission success
     const handleFormSubmit = () => {
-        listStudents(); // Refresh the student list after adding or updating
+        listStudents();
         setAddModalOpen(false);
         setEditModalOpen(false);
     };
 
-    // Fetch students on component mount
     useEffect(() => {
         listStudents();
     }, []);
@@ -64,12 +61,12 @@ const StudentsTable = () => {
         <div className="container mx-auto mt-8">
             <button
                 onClick={openAddModal}
-                className="bg-green-500 text-white px-4 py-2 rounded mb-4"
+                className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
             >
-                Adicionar Estudante
+                <i className="fa-solid fa-user-plus"></i> Adicionar Estudante
             </button>
-            <table className="min-w-full bg-white">
-                <thead>
+            <table className="min-w-full">
+                <thead className='bg-slate-100'>
                     <tr>
                         <th className="px-6 py-3 border-b-2">Nome</th>
                         <th className="px-6 py-3 border-b-2">Email</th>
@@ -81,7 +78,7 @@ const StudentsTable = () => {
                 </thead>
                 <tbody>
                     {students.map((student) => (
-                        <tr key={student.id} className='odd:bg-white even:bg-slate-100'>
+                        <tr key={student.id} className='odd:bg-white even:bg-slate-100 text-center text-slate-600'>
                             <td className="px-6 py-4 border-b">{student.name}</td>
                             <td className="px-6 py-4 border-b">{student.email}</td>
                             <td className="px-6 py-4 border-b">{student.cellphone}</td>
@@ -92,13 +89,13 @@ const StudentsTable = () => {
                                     onClick={() => openEditModal(student)}
                                     className="bg-blue-500 text-white px-4 py-2 rounded"
                                 >
-                                    Editar
+                                    <i className="fa-solid fa-user-pen"></i>
                                 </button>
                                 <button
                                     onClick={() => handleDelete(student.id)}
                                     className="bg-red-500 text-white px-4 py-2 rounded ml-2"
                                 >
-                                    Excluir
+                                    <i className="fa-solid fa-user-minus"></i>
                                 </button>
                             </td>
                         </tr>
@@ -108,13 +105,13 @@ const StudentsTable = () => {
 
             {/* Add Modal */}
             <CustomModal isOpen={isAddModalOpen} onRequestClose={closeModal}>
-                <h2 className="text-xl font-bold mb-4">Adicionar Estudante</h2>
+                <h2 className="text-xl font-bold mb-4 text-center">Adicionar Estudante</h2>
                 <StudentForm onSuccess={handleFormSubmit} />
             </CustomModal>
 
             {/* Edit Modal */}
             <CustomModal isOpen={isEditModalOpen} onRequestClose={closeModal}>
-                <h2 className="text-xl font-bold mb-4">Editar Estudante</h2>
+                <h2 className="text-xl font-bold mb-4 text-center">Editar Estudante</h2>
                 {currentStudent && <StudentForm student={currentStudent} onSuccess={handleFormSubmit} />}
             </CustomModal>
         </div>

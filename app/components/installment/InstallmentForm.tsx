@@ -1,12 +1,11 @@
-// app/components/InstallmentForm.tsx
-"use client"; // Ensure this is present
+"use client";
 
 import React, { useState, useEffect } from 'react';
 import { createInstallment, updateInstallment } from '../../services/api_installments';
 import { Installment } from '../../types/installment';
 
 interface InstallmentFormProps {
-  installment?: Installment; // Accept a Installment object
+  installment?: Installment;
   onSuccess: () => void;
 }
 
@@ -57,7 +56,7 @@ const InstallmentForm: React.FC<InstallmentFormProps> = ({ installment, onSucces
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <label htmlFor="installment" className="block mb-2">Insira o número da parcela:</label>
+      <label htmlFor="installment" className="block mb-2">Número da parcela:</label>
       <input
         id="installment"
         type="text"
@@ -69,7 +68,7 @@ const InstallmentForm: React.FC<InstallmentFormProps> = ({ installment, onSucces
         required
       />
 
-      <label htmlFor="amount" className="block mb-2">Insira o valor da parcela:</label>
+      <label htmlFor="amount" className="block mb-2">Valor da parcela:</label>
       <input
         id="amount"
         type="text"
@@ -81,7 +80,7 @@ const InstallmentForm: React.FC<InstallmentFormProps> = ({ installment, onSucces
         required
       />
 
-      <label htmlFor="payment_date" className="block mb-2">Insira a data e hora do pagamento da parcela:</label>
+      <label htmlFor="payment_date" className="block mb-2">Data do Pagamento:</label>
       <input
         id="payment_date"
         type="datetime-local"
@@ -91,12 +90,11 @@ const InstallmentForm: React.FC<InstallmentFormProps> = ({ installment, onSucces
         className="block w-full px-4 py-2 border rounded"
         required
       />
-      {/* Add other form fields similarly */}
       <button
         type="submit"
         className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
       >
-        {installment ? 'Atualizar Parcela' : 'Adicionar Parcela'}
+        <i className="fa-solid fa-floppy-disk"></i> Salvar
       </button>
     </form>
   );

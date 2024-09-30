@@ -2,7 +2,7 @@ import InstallmentsTable from '../components/installment/InstallmentTable';
 
 const InstallmentPage = () => (
   <div className="container mx-auto">
-    <h1 className="text-2xl font-bold mb-4">Lista de Parcelas</h1>
+    <h1 className="text-2xl font-bold mb-4 text-center">Lista de Parcelas</h1>
     <InstallmentsTable />
   </div>
 );

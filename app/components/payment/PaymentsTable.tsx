@@ -1,5 +1,4 @@
-// app/components/PaymentsTable.tsx
-"use client"; // Ensure this is present
+"use client";
 
 import React, { useEffect, useState } from 'react';
 import { PaymentTable } from '../../types/payment_table';
@@ -14,7 +13,6 @@ const PaymentsTable = () => {
     const [isEditModalOpen, setEditModalOpen] = useState(false);
     const [currentPayment, setCurrentPayment] = useState<PaymentTable | null>(null);
 
-    // List payments
     const listpayments = async () => {
         try {
             const response = await fetchPayments();
@@ -24,11 +22,10 @@ const PaymentsTable = () => {
         }
     };
 
-    // Handle delete
     const handleDelete = async (id: number) => {
         try {
             await deletePayment(id);
-            await listpayments(); // Refresh the payment list after deletion
+            await listpayments();
         } catch (error) {
             console.error('Erro ao Remover Pagamento:', error);
         }
@@ -49,9 +46,8 @@ const PaymentsTable = () => {
         setAddModalOpen(false);
     };
 
-    // Handle form submission success
     const handleFormSubmit = () => {
-        listpayments(); // Refresh the payment list after adding or updating
+        listpayments();
         setAddModalOpen(false);
         setEditModalOpen(false);
     };
@@ -61,12 +57,10 @@ const PaymentsTable = () => {
             id: paymentTable.id,
             student_id: paymentTable.student_id,
             payment_method_id: paymentTable.payment_method_id,
-            amount: parseFloat(paymentTable.amount), // Convert amount to number
-            // Map any other fields if necessary
+            amount: parseFloat(paymentTable.amount),
         };
     };
 
-    // Fetch payments on component mount
     useEffect(() => {
         listpayments();
     }, []);
@@ -75,12 +69,12 @@ const PaymentsTable = () => {
         <div className="container mx-auto mt-8">
             <button
                 onClick={openAddModal}
-                className="bg-green-500 text-white px-4 py-2 rounded mb-4"
+                className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
             >
-                Adicionar Pagamento
+                <i className="fa-solid fa-plus"></i> Adicionar Pagamento
             </button>
             <table className="min-w-full bg-white">
-                <thead>
+                <thead className='bg-slate-100'>
                     <tr>
                         <th className="px-6 py-3 border-b-2">Nome do Estudante</th>
                         <th className="px-6 py-3 border-b-2">Forma de Pagamento</th>
@@ -99,26 +93,26 @@ const PaymentsTable = () => {
                             .toFixed(2);
 
                         return (
-                            <tr key={payment.id}>
+                            <tr key={payment.id} className='odd:bg-white even:bg-slate-100 text-center text-slate-600'>
                                 <td className="px-6 py-4 border-b">{payment.student.data.name}</td>
                                 <td className="px-6 py-4 border-b">{payment.paymentMethod.data.method}</td>
                                 <td className="px-6 py-4 border-b">{payment.installments.data.length}</td>
-                                <td className="px-6 py-4 border-b">{payment.amount}</td>
+                                <td className="px-6 py-4 border-b">R$ {payment.amount.replace('.', ',')}</td>
                                 <td className="px-6 py-4 border-b">
-                                    {totalPaid} {/* Total paid */}
+                                    R$ {totalPaid.replace('.', ',')}
                                 </td>
                                 <td className="px-6 py-4 border-b">
                                     <button
                                         onClick={() => openEditModal(payment)}
                                         className="bg-blue-500 text-white px-4 py-2 rounded"
                                     >
-                                        Editar
+                                        <i className="fa-solid fa-pen"></i>
                                     </button>
                                     <button
                                         onClick={() => handleDelete(payment.id)}
                                         className="bg-red-500 text-white px-4 py-2 rounded ml-2"
                                     >
-                                        Excluir
+                                        <i className="fa-solid fa-minus"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -130,13 +124,13 @@ const PaymentsTable = () => {
 
             {/* Add Modal */}
             <CustomModal isOpen={isAddModalOpen} onRequestClose={closeModal}>
-                <h2 className="text-xl font-bold mb-4">Adicionar Pagamento</h2>
+                <h2 className="text-xl font-bold mb-4 text-center">Adicionar Pagamento</h2>
                 <PaymentForm onSuccess={handleFormSubmit} />
             </CustomModal>
 
             {/* Edit Modal */}
             <CustomModal isOpen={isEditModalOpen} onRequestClose={closeModal}>
-                <h2 className="text-xl font-bold mb-4">Editar Pagamento</h2>
+                <h2 className="text-xl font-bold mb-4 text-center">Editar Pagamento</h2>
                 {currentPayment && <PaymentForm payment={mapPaymentTableToPayment(currentPayment)} onSuccess={handleFormSubmit} />}
             </CustomModal>
         </div>

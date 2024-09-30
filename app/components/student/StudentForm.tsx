@@ -1,13 +1,12 @@
-// app/components/StudentForm.tsx
-"use client"; // Ensure this is present
+"use client";
 
 import React, { useState, useEffect } from 'react';
-import InputMask from 'react-input-mask'; 
+import InputMask from 'react-input-mask';
 import { createStudent, updateStudent } from '../../services/api';
 import { Student } from '../../types/student';
 
 interface StudentFormProps {
-  student?: Student; // Accept a Student object
+  student?: Student;
   onSuccess: () => void;
 }
 
@@ -52,7 +51,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ student, onSuccess }) => {
       } else {
         await createStudent(formData);
       }
-      onSuccess(); // Notify parent component
+      onSuccess();
     } catch (error) {
       console.error('Falha ao enviar o formulário:', error);
     }
@@ -60,7 +59,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ student, onSuccess }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <label htmlFor="name" className="block mb-2">Insira o nome do estudante:</label>
+      <label htmlFor="name" className="block mb-2">Nome:</label>
       <input
         id="name"
         type="text"
@@ -72,7 +71,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ student, onSuccess }) => {
         required
       />
 
-      <label htmlFor="email" className="block mb-2">Insira o email do estudante:</label>
+      <label htmlFor="email" className="block mb-2">Email:</label>
       <input
         id="email"
         type="email"
@@ -83,21 +82,21 @@ const StudentForm: React.FC<StudentFormProps> = ({ student, onSuccess }) => {
         className="block w-full px-4 py-2 border rounded"
         required
       />
-      
-      <label htmlFor="cellphone" className="block mb-2">Insira o celular do estudante:</label>
+
+      <label htmlFor="cellphone" className="block mb-2">Celular:</label>
       <InputMask
         id="cellphone"
         mask="(99) 99999-9999"
         type="text"
         name="cellphone"
-        placeholder="Celular"
+        placeholder="(00) 00000-0000"
         value={formData.cellphone || ''}
         onChange={handleChange}
         className="block w-full px-4 py-2 border rounded"
         required
       />
 
-      <label htmlFor="birth_date" className="block mb-2">Insira o nascimento do estudante:</label>
+      <label htmlFor="birth_date" className="block mb-2">Data de Nascimento:</label>
       <input
         id="birth_date"
         type="date"
@@ -108,24 +107,23 @@ const StudentForm: React.FC<StudentFormProps> = ({ student, onSuccess }) => {
         required
       />
 
-      <label htmlFor="cpf" className="block mb-2">Insira o cpf do estudante:</label>
+      <label htmlFor="cpf" className="block mb-2">CPF:</label>
       <InputMask
         id="cpf"
         mask="999.999.999-99"
         type="text"
         name="cpf"
-        placeholder="CPF"
+        placeholder="000.000.000-00"
         value={formData.cpf || ''}
         onChange={handleChange}
         className="block w-full px-4 py-2 border rounded"
         required
       />
-      {/* Add other form fields similarly */}
       <button
         type="submit"
         className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
       >
-        {student ? 'Atualizar Estudante' : 'Adicionar Estudante'}
+        <i className="fa-solid fa-floppy-disk"></i> Salvar
       </button>
     </form>
   );

@@ -34,6 +34,7 @@ export default function RootLayout({
         <div id="__next">
         </div>
         {children}
+        <script src="https://kit.fontawesome.com/4b77a64568.js" crossOrigin="anonymous"></script>
       </body>
     </html>
   );

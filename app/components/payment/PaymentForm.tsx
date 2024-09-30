@@ -1,5 +1,4 @@
-// app/components/PaymentForm.tsx
-"use client"; // Ensure this is present
+"use client";
 
 import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask';
@@ -9,7 +8,7 @@ import SelectStudents from "../selects/SelectStudents"
 import SelectPaymentMethods from "../selects/SelectPaymentMethods"
 
 interface PaymentFormProps {
-    payment?: Payment; // Accept a Payment object
+    payment?: Payment;
     onSuccess: () => void;
 }
 
@@ -51,25 +50,23 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ payment, onSuccess }) => {
             } else {
                 await createPayment(formData);
             }
-            onSuccess(); // Notify parent component
+            onSuccess();
         } catch (error) {
             console.error('Falha ao enviar o formulário:', error);
         }
     };
 
-    // Handle payment method selection from SelectPaymentMethods
     const handleSelectPaymentMethod = (selectedValue: number | '') => {
         setFormData((prevData) => ({
             ...prevData,
-            payment_method_id: selectedValue as number, // Update payment method ID in the form data
+            payment_method_id: selectedValue as number,
         }));
     };
 
-    // Handle student selection from SelectStudents
     const handleSelectStudent = (selectedValue: number | '') => {
         setFormData((prevData) => ({
             ...prevData,
-            student_id: selectedValue as number, // Update student ID in the form data
+            student_id: selectedValue as number,
         }));
     };
 
@@ -80,7 +77,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ payment, onSuccess }) => {
 
             <SelectPaymentMethods value={formData.payment_method_id} onSelect={handleSelectPaymentMethod} />
 
-            <label htmlFor="amount" className="block mb-2">Insira o valor à pagar:</label>
+            <label htmlFor="amount" className="block mb-2">Valor à pagar:</label>
             <InputMask
                 id="amount"
                 mask="9999.99"
@@ -92,12 +89,11 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ payment, onSuccess }) => {
                 className="block w-full px-4 py-2 border rounded"
                 required
             />
-            {/* Add other form fields similarly */}
             <button
                 type="submit"
                 className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
             >
-                {payment ? 'Atualizar Pagamento' : 'Adicionar Pagamento'}
+                <i className="fa-solid fa-floppy-disk"></i> Salvar
             </button>
         </form>
     );
