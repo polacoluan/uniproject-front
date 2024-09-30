@@ -2,10 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask';
-import { updatePayment, createPayment } from '../../services/api_payment';
+import api from '../../services/api';
 import { Payment } from '../../types/payment';
 import SelectStudents from "../selects/SelectStudents"
 import SelectPaymentMethods from "../selects/SelectPaymentMethods"
+import { patch } from 'axios';
 
 interface PaymentFormProps {
     payment?: Payment;
@@ -46,9 +47,9 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ payment, onSuccess }) => {
         event.preventDefault();
         try {
             if (payment) {
-                await updatePayment(payment.id, formData);
+                await api.patch('/payment/'+payment.id, formData);
             } else {
-                await createPayment(formData);
+                await api.post('/payment/', formData);
             }
             onSuccess();
         } catch (error) {

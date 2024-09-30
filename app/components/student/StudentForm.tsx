@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask';
-import { createStudent, updateStudent } from '../../services/api';
+import api from '../../services/api';
 import { Student } from '../../types/student';
 
 interface StudentFormProps {
@@ -47,9 +47,9 @@ const StudentForm: React.FC<StudentFormProps> = ({ student, onSuccess }) => {
     event.preventDefault();
     try {
       if (student) {
-        await updateStudent(student.id, formData);
+        await api.patch('/student/'+student.id, formData);
       } else {
-        await createStudent(formData);
+        await api.post('/student/',formData);
       }
       onSuccess();
     } catch (error) {

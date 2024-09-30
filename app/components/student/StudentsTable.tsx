@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Student } from '../../types/student';
 import CustomModal from '../modal/Modal';
 import StudentForm from './StudentForm';
-import { fetchStudents, deleteStudent } from '../../services/api';
+import api from '../../services/api';
 
 const StudentsTable = () => {
     const [students, setStudents] = useState<Student[]>([]);
@@ -15,8 +15,8 @@ const StudentsTable = () => {
     // List students
     const listStudents = async () => {
         try {
-            const response = await fetchStudents();
-            setStudents(response);
+            const response = await api.get('/student/');
+            setStudents(response.data);
         } catch (error) {
             console.error('Erro ao Buscar Estudantes:', error);
         }
@@ -25,7 +25,7 @@ const StudentsTable = () => {
     // Handle delete
     const handleDelete = async (id: number) => {
         try {
-            await deleteStudent(id);
+            await api.delete('/student/'+ id);
             await listStudents();
         } catch (error) {
             console.error('Erro ao Remover Estudante:', error);

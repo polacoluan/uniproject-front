@@ -5,7 +5,7 @@ import { PaymentTable } from '../../types/payment_table';
 import { Payment } from '../../types/payment';
 import CustomModal from '../modal/Modal';
 import PaymentForm from './PaymentForm';
-import { fetchPayments, deletePayment } from '../../services/api_payment';
+import api from '../../services/api';
 
 const PaymentsTable = () => {
     const [payments, setPayments] = useState<PaymentTable[]>([]);
@@ -15,8 +15,8 @@ const PaymentsTable = () => {
 
     const listpayments = async () => {
         try {
-            const response = await fetchPayments();
-            setPayments(response);
+            const response = await api.get('/payment/');
+            setPayments(response.data);
         } catch (error) {
             console.error('Erro ao Buscar Pagamento:', error);
         }
@@ -24,7 +24,7 @@ const PaymentsTable = () => {
 
     const handleDelete = async (id: number) => {
         try {
-            await deletePayment(id);
+            await api.delete('/payment/'+id);
             await listpayments();
         } catch (error) {
             console.error('Erro ao Remover Pagamento:', error);

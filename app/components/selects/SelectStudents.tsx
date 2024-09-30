@@ -1,8 +1,7 @@
-// app/components/SelectStudents.tsx
-"use client"; // Ensure this is present
+"use client";
 
 import React, { useEffect, useState } from 'react';
-import { fetchStudents } from '../../services/api';
+import api from '../../services/api';
 
 interface DataOption {
   id: number;
@@ -10,27 +9,25 @@ interface DataOption {
 }
 
 interface SelectComponentProps {
-  onSelect: (selectedValue: number | '') => void; // Prop to pass selected value back
+  onSelect: (selectedValue: number | '') => void;
   value: number;
 }
 
 const SelectStudents: React.FC<SelectComponentProps> = ({ onSelect, value }) => {
-  const [options, setOptions] = useState<DataOption[]>([]); // Store the options
+  const [options, setOptions] = useState<DataOption[]>([]);
 
-  // Fetch options from the API when the component mounts
   useEffect(() => {
     const loadOptions = async () => {
-      const data = await fetchStudents(); // API call to fetch data
-      setOptions(data); // Set options to state
+      const response = await api.get('/student/');
+      setOptions(response.data);
     };
 
     loadOptions();
   }, []);
 
-  // Handle change in select
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = Number(e.target.value);
-    onSelect(selectedValue); // Pass the selected value to the parent component
+    onSelect(selectedValue);
   };
 
 
@@ -47,7 +44,7 @@ const SelectStudents: React.FC<SelectComponentProps> = ({ onSelect, value }) => 
         <option value="">--Selecione--</option>
         {options.map(option => (
           <option key={option.id} value={option.id}>
-            {option.name} {/* Display the name or other appropriate field */}
+            {option.name}
           </option>
         ))}
       </select>

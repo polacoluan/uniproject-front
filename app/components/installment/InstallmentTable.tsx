@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Installment } from '../../types/installment';
 import CustomModal from '../modal/Modal';
 import InstallmentForm from './InstallmentForm';
-import { fetchInstallments, deleteInstallment } from '../../services/api_installments';
+import api from '../../services/api';
 
 const InstallmentsTable = () => {
     const [installments, setInstallments] = useState<Installment[]>([]);
@@ -14,8 +14,8 @@ const InstallmentsTable = () => {
 
     const listInstallments = async () => {
         try {
-            const response = await fetchInstallments();
-            setInstallments(response);
+            const response = await api.get('/installment/');
+            setInstallments(response.data);
         } catch (error) {
             console.error('Erro ao Buscar Parcelas:', error);
         }
@@ -23,7 +23,7 @@ const InstallmentsTable = () => {
 
     const handleDelete = async (id: number) => {
         try {
-            await deleteInstallment(id);
+            await api.delete('/payment/'+id);
             await listInstallments();
         } catch (error) {
             console.error('Erro ao Remover Parcela:', error);
