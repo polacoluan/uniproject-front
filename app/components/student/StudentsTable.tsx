@@ -2,10 +2,10 @@
 "use client"; // Ensure this is present
 
 import React, { useEffect, useState } from 'react';
-import { Student } from '../types/student';
-import CustomModal from './Modal';
+import { Student } from '../../types/student';
+import CustomModal from '../modal/Modal';
 import StudentForm from './StudentForm';
-import { fetchStudents, deleteStudent } from '../services/api';
+import { fetchStudents, deleteStudent } from '../../services/api';
 
 const StudentsTable = () => {
     const [students, setStudents] = useState<Student[]>([]);
@@ -81,7 +81,7 @@ const StudentsTable = () => {
                 </thead>
                 <tbody>
                     {students.map((student) => (
-                        <tr key={student.id}>
+                        <tr key={student.id} className='odd:bg-white even:bg-slate-100'>
                             <td className="px-6 py-4 border-b">{student.name}</td>
                             <td className="px-6 py-4 border-b">{student.email}</td>
                             <td className="px-6 py-4 border-b">{student.cellphone}</td>

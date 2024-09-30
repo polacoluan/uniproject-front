@@ -2,11 +2,11 @@
 "use client"; // Ensure this is present
 
 import React, { useEffect, useState } from 'react';
-import { PaymentTable } from '../types/payment_table';
-import { Payment } from '../types/payment';
-import CustomModal from './Modal';
+import { PaymentTable } from '../../types/payment_table';
+import { Payment } from '../../types/payment';
+import CustomModal from '../modal/Modal';
 import PaymentForm from './PaymentForm';
-import { fetchPayments, deletePayment } from '../services/api_payment';
+import { fetchPayments, deletePayment } from '../../services/api_payment';
 
 const PaymentsTable = () => {
     const [payments, setPayments] = useState<PaymentTable[]>([]);

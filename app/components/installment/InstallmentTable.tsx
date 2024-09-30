@@ -2,11 +2,10 @@
 "use client"; // Ensure this is present
 
 import React, { useEffect, useState } from 'react';
-import { Installment } from '../types/installment';
-import CustomModal from './Modal';
+import { Installment } from '../../types/installment';
+import CustomModal from '../modal/Modal';
 import InstallmentForm from './InstallmentForm';
-import { fetchInstallments, deleteInstallment } from '../services/api_installments';
-import { Table, TableHeader, TableBody, TableRow, TableCell, TableData } from '@shadcn/ui';
+import { fetchInstallments, deleteInstallment } from '../../services/api_installments';
 
 const InstallmentsTable = () => {
     const [installments, setInstallments] = useState<Installment[]>([]);
@@ -69,24 +68,24 @@ const InstallmentsTable = () => {
             >
                 Adicionar Parcela
             </button> */}
-            <Table className="min-w-full bg-white">
-                <TableHeader>
-                    <TableRow>
-                        <TableCell>Estudante</TableCell>
-                        <TableCell>Parcela</TableCell>
-                        <TableCell>Valor</TableCell>
-                        <TableCell>Data de Pagamento</TableCell>
-                        <TableCell>Ações</TableCell>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
+            <table className="min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th className="px-6 py-3 border-b-2">Estudante</th>
+                        <th className="px-6 py-3 border-b-2">Parcela</th>
+                        <th className="px-6 py-3 border-b-2">Valor</th>
+                        <th className="px-6 py-3 border-b-2">Data de Pagamento</th>
+                        <th className="px-6 py-3 border-b-2">Ações</th>
+                        </tr>
+                </thead>
+                <tbody>
                     {installments.map((installment) => (
-                        <TableRow key={installment.id}>
-                            <TableData>{installment.student_name}</TableData>
-                            <TableData>{installment.installment}</TableData>
-                            <TableData>{installment.amount}</TableData>
-                            <TableData>{installment.payment_date ?? 'Não Pago'}</TableData>
-                            <TableData>
+                        <tr key={installment.id}>
+                            <td className="px-6 py-4 border-b">{installment.student_name}</td>
+                            <td className="px-6 py-4 border-b">{installment.installment}</td>
+                            <td className="px-6 py-4 border-b">{installment.amount}</td>
+                            <td className="px-6 py-4 border-b">{installment.payment_date ?? 'Não Pago'}</td>
+                            <td className="px-6 py-4 border-b">
                                 <button
                                     onClick={() => openEditModal(installment)}
                                     className="bg-blue-500 text-white px-4 py-2 rounded"
@@ -99,11 +98,11 @@ const InstallmentsTable = () => {
                                 >
                                     Excluir
                                 </button>
-                            </TableData>
-                        </TableRow>
+                            </td>
+                        </tr>
                     ))}
-                </TableBody>
-            </Table>
+                </tbody>
+            </table>
 
             {/* Add Modal */}
             <CustomModal isOpen={isAddModalOpen} onRequestClose={closeModal}>

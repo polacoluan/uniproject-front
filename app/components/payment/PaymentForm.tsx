@@ -3,10 +3,10 @@
 
 import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask';
-import { updatePayment, createPayment } from '../services/api_payment';
-import { Payment } from '../types/payment';
-import SelectStudents from "./SelectStudents"
-import SelectPaymentMethods from "./SelectPaymentMethods"
+import { updatePayment, createPayment } from '../../services/api_payment';
+import { Payment } from '../../types/payment';
+import SelectStudents from "../selects/SelectStudents"
+import SelectPaymentMethods from "../selects/SelectPaymentMethods"
 
 interface PaymentFormProps {
     payment?: Payment; // Accept a Payment object

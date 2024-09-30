@@ -1,4 +1,4 @@
-import PaymentsTable from '../components/PaymentsTable';
+import PaymentsTable from '../components/payment/PaymentsTable';
 
 const PaymentsPage = () => (
   <div className="container mx-auto">

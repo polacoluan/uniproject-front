@@ -1,4 +1,4 @@
-import StudentsTable from '../components/StudentsTable';
+import StudentsTable from '../components/student/StudentsTable';
 
 const StudentsPage = () => (
   <div className="container mx-auto">

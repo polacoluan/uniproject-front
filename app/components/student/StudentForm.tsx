@@ -3,8 +3,8 @@
 
 import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask'; 
-import { createStudent, updateStudent } from '../services/api';
-import { Student } from '../types/student';
+import { createStudent, updateStudent } from '../../services/api';
+import { Student } from '../../types/student';
 
 interface StudentFormProps {
   student?: Student; // Accept a Student object

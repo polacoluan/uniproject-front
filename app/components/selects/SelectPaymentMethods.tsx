@@ -1,26 +1,27 @@
-// app/components/SelectStudents.tsx
+// app/components/SelectPaymentMethods.tsx
 "use client"; // Ensure this is present
 
 import React, { useEffect, useState } from 'react';
-import { fetchStudents } from '../services/api';
+import { fetchPaymentMethods } from '../../services/api_payment_methods';
 
 interface DataOption {
   id: number;
-  name: string;
+  method: string;
+  installments: number;
 }
 
 interface SelectComponentProps {
   onSelect: (selectedValue: number | '') => void; // Prop to pass selected value back
-  value: number;
+  value: number; // Controlled by the parent component
 }
 
-const SelectStudents: React.FC<SelectComponentProps> = ({ onSelect, value }) => {
+const SelectPaymentMethods: React.FC<SelectComponentProps> = ({ onSelect, value }) => {
   const [options, setOptions] = useState<DataOption[]>([]); // Store the options
 
   // Fetch options from the API when the component mounts
   useEffect(() => {
     const loadOptions = async () => {
-      const data = await fetchStudents(); // API call to fetch data
+      const data = await fetchPaymentMethods(); // API call to fetch data
       setOptions(data); // Set options to state
     };
 
@@ -33,21 +34,20 @@ const SelectStudents: React.FC<SelectComponentProps> = ({ onSelect, value }) => 
     onSelect(selectedValue); // Pass the selected value to the parent component
   };
 
-
   return (
     <div>
-      <label htmlFor="select-students" className="block mb-2">Selecione um Estudante:</label>
+      <label htmlFor="select-payment-methods" className="block mb-2">Selecione a forma de pagamento:</label>
       <select
-        id="select-students"
-        name="student_id"
-        value={value}
+        id="select-payment-methods"
+        name="payment_method_id"
+        value={value} // Controlled value from the parent component
         onChange={handleSelectChange}
         className="block w-full px-4 py-2 border rounded"
       >
         <option value="">--Selecione--</option>
         {options.map(option => (
           <option key={option.id} value={option.id}>
-            {option.name} {/* Display the name or other appropriate field */}
+            {option.method} {/* Display the name or other appropriate field */}
           </option>
         ))}
       </select>
@@ -55,4 +55,4 @@ const SelectStudents: React.FC<SelectComponentProps> = ({ onSelect, value }) => 
   );
 };
 
-export default SelectStudents;
+export default SelectPaymentMethods;
