@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { Student } from '../../types/student';
-import CustomModal from '../modal/Modal';
-import StudentForm from './StudentForm';
+import CustomModal from '../modal/modal';
+import StudentForm from '../student/student-form';
 import api from '../../services/api';
 
 const StudentsTable = () => {

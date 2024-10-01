@@ -4,9 +4,8 @@ import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask';
 import api from '../../services/api';
 import { Payment } from '../../types/payment';
-import SelectStudents from "../selects/SelectStudents"
-import SelectPaymentMethods from "../selects/SelectPaymentMethods"
-import { patch } from 'axios';
+import SelectStudents from "../selects/select-students"
+import SelectPaymentMethods from "../selects/select-payment-methods"
 
 interface PaymentFormProps {
     payment?: Payment;

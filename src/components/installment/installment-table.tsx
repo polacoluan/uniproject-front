@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { Installment } from '../../types/installment';
-import CustomModal from '../modal/Modal';
-import InstallmentForm from './InstallmentForm';
+import CustomModal from '../modal/modal';
+import InstallmentForm from './installment-form';
 import api from '../../services/api';
 
 const InstallmentsTable = () => {

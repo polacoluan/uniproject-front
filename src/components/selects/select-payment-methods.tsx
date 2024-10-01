@@ -5,7 +5,8 @@ import api from '../../services/api';
 
 interface DataOption {
   id: number;
-  name: string;
+  method: string;
+  installments: number;
 }
 
 interface SelectComponentProps {
@@ -13,12 +14,12 @@ interface SelectComponentProps {
   value: number;
 }
 
-const SelectStudents: React.FC<SelectComponentProps> = ({ onSelect, value }) => {
+const SelectPaymentMethods: React.FC<SelectComponentProps> = ({ onSelect, value }) => {
   const [options, setOptions] = useState<DataOption[]>([]);
 
   useEffect(() => {
     const loadOptions = async () => {
-      const response = await api.get('/student/');
+      const response = await api.get('/payment-methods/');
       setOptions(response.data.data);
     };
 
@@ -30,21 +31,20 @@ const SelectStudents: React.FC<SelectComponentProps> = ({ onSelect, value }) => 
     onSelect(selectedValue);
   };
 
-
   return (
     <div>
-      <label htmlFor="select-students" className="block mb-2">Selecione um Estudante:</label>
+      <label htmlFor="select-payment-methods" className="block mb-2">Selecione a forma de pagamento:</label>
       <select
-        id="select-students"
-        name="student_id"
+        id="select-payment-methods"
+        name="payment_method_id"
         value={value}
         onChange={handleSelectChange}
         className="block w-full px-4 py-2 border rounded"
       >
-        <option value="">--Selecione--</option>
+        <option value="">Selecione</option>
         {options.map(option => (
           <option key={option.id} value={option.id}>
-            {option.name}
+            {option.method}
           </option>
         ))}
       </select>
@@ -52,4 +52,4 @@ const SelectStudents: React.FC<SelectComponentProps> = ({ onSelect, value }) => 
   );
 };
 
-export default SelectStudents;
+export default SelectPaymentMethods;
