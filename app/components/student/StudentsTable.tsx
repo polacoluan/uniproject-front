@@ -16,7 +16,7 @@ const StudentsTable = () => {
     const listStudents = async () => {
         try {
             const response = await api.get('/student/');
-            setStudents(response.data);
+            setStudents(response.data.data);
         } catch (error) {
             console.error('Erro ao Buscar Estudantes:', error);
         }

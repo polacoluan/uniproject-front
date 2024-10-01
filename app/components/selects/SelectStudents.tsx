@@ -19,7 +19,7 @@ const SelectStudents: React.FC<SelectComponentProps> = ({ onSelect, value }) => 
   useEffect(() => {
     const loadOptions = async () => {
       const response = await api.get('/student/');
-      setOptions(response.data);
+      setOptions(response.data.data);
     };
 
     loadOptions();

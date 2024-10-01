@@ -15,7 +15,7 @@ const InstallmentsTable = () => {
     const listInstallments = async () => {
         try {
             const response = await api.get('/installment/');
-            setInstallments(response.data);
+            setInstallments(response.data.data);
         } catch (error) {
             console.error('Erro ao Buscar Parcelas:', error);
         }

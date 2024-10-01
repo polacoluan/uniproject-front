@@ -20,7 +20,7 @@ const SelectPaymentMethods: React.FC<SelectComponentProps> = ({ onSelect, value 
   useEffect(() => {
     const loadOptions = async () => {
       const response = await api.get('/payment-methods/');
-      setOptions(response.data);
+      setOptions(response.data.data);
     };
 
     loadOptions();

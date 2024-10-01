@@ -16,7 +16,7 @@ const PaymentsTable = () => {
     const listpayments = async () => {
         try {
             const response = await api.get('/payment/');
-            setPayments(response.data);
+            setPayments(response.data.data);
         } catch (error) {
             console.error('Erro ao Buscar Pagamento:', error);
         }
