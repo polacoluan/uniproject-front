@@ -6,6 +6,8 @@ import CustomModal from '../modal/modal';
 import StudentForm from '../student/student-form';
 import { listStudents } from '../../services/student/list-students';
 import { deleteStudent } from '../../services/student/delete-student';
+import HeadTable from '../table/table-header';
+import BodyTable from '../table/table-body';
 
 const StudentsTable = () => {
     const [students, setStudents] = useState<Student[]>([]);
@@ -52,6 +54,15 @@ const StudentsTable = () => {
         setEditModalOpen(false);
     };
 
+    const headers = [
+        {"id":1,"name":"Nome"},
+        {"id":2,"name":"Email"},
+        {"id":3,"name":"Celular"},
+        {"id":4,"name":"Data Nasc."},
+        {"id":5,"name":"CPF"},
+        // {"id":6,"name":"Ações"},
+    ];
+
     useEffect(() => {
         loadStudents();
     }, []);
@@ -64,43 +75,10 @@ const StudentsTable = () => {
             >
                 <i className="fa-solid fa-user-plus"></i> Adicionar Estudante
             </button>
-            <table className="min-w-full">
-                <thead className='bg-slate-100'>
-                    <tr>
-                        <th className="px-6 py-3 border-b-2">Nome</th>
-                        <th className="px-6 py-3 border-b-2">Email</th>
-                        <th className="px-6 py-3 border-b-2">Celular</th>
-                        <th className="px-6 py-3 border-b-2">Data Nasc.</th>
-                        <th className="px-6 py-3 border-b-2">CPF</th>
-                        <th className="px-6 py-3 border-b-2">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {students.map((student) => (
-                        <tr key={student.id} className='odd:bg-white even:bg-slate-100 text-center text-slate-600'>
-                            <td className="px-6 py-4 border-b">{student.name}</td>
-                            <td className="px-6 py-4 border-b">{student.email}</td>
-                            <td className="px-6 py-4 border-b">{student.cellphone}</td>
-                            <td className="px-6 py-4 border-b">{student.birth_date}</td>
-                            <td className="px-6 py-4 border-b">{student.cpf}</td>
-                            <td className="px-6 py-4 border-b">
-                                <button
-                                    onClick={() => openEditModal(student)}
-                                    className="bg-blue-500 text-white px-4 py-2 rounded"
-                                >
-                                    <i className="fa-solid fa-user-pen"></i>
-                                </button>
-                                <button
-                                    onClick={() => handleDelete(student.id)}
-                                    className="bg-red-500 text-white px-4 py-2 rounded ml-2"
-                                >
-                                    <i className="fa-solid fa-user-minus"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <Table className="min-w-full">
+                <HeadTable headerInfo={headers} />
+                <BodyTable bodyInfo={students} />
+            </Table>
 
             <CustomModal isOpen={isAddModalOpen} onRequestClose={closeModal}>
                 <h2 className="text-xl font-bold mb-4 text-center">Adicionar Estudante</h2>
@@ -111,8 +89,35 @@ const StudentsTable = () => {
                 <h2 className="text-xl font-bold mb-4 text-center">Editar Estudante</h2>
                 {currentStudent && <StudentForm student={currentStudent} onSuccess={handleFormSubmit} />}
             </CustomModal>
+            <TableHe
         </div>
     );
 };
 
 export default StudentsTable;
+
+{/* <TableBody>
+{students.map((student) => (
+    <TableRow key={student.id} className='odd:bg-white even:bg-slate-100 text-center text-slate-600'>
+        <TableCell className="px-6 py-4 border-b">{student.name}</TableCell>
+        <TableCell className="px-6 py-4 border-b">{student.email}</TableCell>
+        <TableCell className="px-6 py-4 border-b">{student.cellphone}</TableCell>
+        <TableCell className="px-6 py-4 border-b">{student.birth_date}</TableCell>
+        <TableCell className="px-6 py-4 border-b">{student.cpf}</TableCell>
+        <TableCell className="px-6 py-4 border-b">
+            <button
+                onClick={() => openEditModal(student)}
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+                <i className="fa-solid fa-user-pen"></i>
+            </button>
+            <button
+                onClick={() => handleDelete(student.id)}
+                className="bg-red-500 text-white px-4 py-2 rounded ml-2"
+            >
+                <i className="fa-solid fa-user-minus"></i>
+            </button>
+        </TableCell>
+    </TableRow>
+))}
+</TableBody> */}

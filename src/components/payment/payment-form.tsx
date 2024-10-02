@@ -73,7 +73,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ payment, onSuccess }) => {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
-
+            <
             <SelectStudents value={formData.student_id} onSelect={handleSelectStudent} />
 
             <SelectPaymentMethods value={formData.payment_method_id} onSelect={handleSelectPaymentMethod} />
