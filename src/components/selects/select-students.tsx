@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import api from '../../services/api';
+import { listStudents } from '../../services/student/list-students';
 
 interface DataOption {
   id: number;
@@ -18,8 +18,8 @@ const SelectStudents: React.FC<SelectComponentProps> = ({ onSelect, value }) => 
 
   useEffect(() => {
     const loadOptions = async () => {
-      const response = await api.get('/student/');
-      setOptions(response.data.data);
+      const response = await listStudents();
+      setOptions(response);
     };
 
     loadOptions();

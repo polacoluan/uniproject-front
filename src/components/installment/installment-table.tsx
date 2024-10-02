@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { Installment } from '../../types/installment';
 import CustomModal from '../modal/modal';
 import InstallmentForm from './installment-form';
-import api from '../../services/api';
+import { listInstallments } from '../../services/installment/list-installments';
+import { deleteInstallment } from '../../services/installment/delete-installment';
 
 const InstallmentsTable = () => {
     const [installments, setInstallments] = useState<Installment[]>([]);
@@ -12,10 +13,10 @@ const InstallmentsTable = () => {
     const [isEditModalOpen, setEditModalOpen] = useState(false);
     const [currentInstallment, setCurrentInstallment] = useState<Installment | null>(null);
 
-    const listInstallments = async () => {
+    const loadInstallments = async () => {
         try {
-            const response = await api.get('/installment/');
-            setInstallments(response.data.data);
+            const response = await listInstallments();
+            setInstallments(response);
         } catch (error) {
             console.error('Erro ao Buscar Parcelas:', error);
         }
@@ -23,8 +24,8 @@ const InstallmentsTable = () => {
 
     const handleDelete = async (id: number) => {
         try {
-            await api.delete('/payment/'+id);
-            await listInstallments();
+            await deleteInstallment(id);
+            await loadInstallments();
         } catch (error) {
             console.error('Erro ao Remover Parcela:', error);
         }
@@ -46,13 +47,13 @@ const InstallmentsTable = () => {
     };
 
     const handleFormSubmit = () => {
-        listInstallments();
+        loadInstallments();
         setAddModalOpen(false);
         setEditModalOpen(false);
     };
 
     useEffect(() => {
-        listInstallments();
+        loadInstallments();
     }, []);
 
     return (

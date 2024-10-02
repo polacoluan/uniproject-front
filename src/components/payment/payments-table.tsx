@@ -5,7 +5,8 @@ import { PaymentTable } from '../../types/payment-table';
 import { Payment } from '../../types/payment';
 import CustomModal from '../modal/modal';
 import PaymentForm from './payment-form';
-import api from '../../services/api';
+import { listPayments } from '../../services/payment/list-payments';
+import { deletePayment } from '../../services/payment/delete-payment';
 
 const PaymentsTable = () => {
     const [payments, setPayments] = useState<PaymentTable[]>([]);
@@ -13,10 +14,10 @@ const PaymentsTable = () => {
     const [isEditModalOpen, setEditModalOpen] = useState(false);
     const [currentPayment, setCurrentPayment] = useState<PaymentTable | null>(null);
 
-    const listpayments = async () => {
+    const loadPayments = async () => {
         try {
-            const response = await api.get('/payment/');
-            setPayments(response.data.data);
+            const response = await listPayments();
+            setPayments(response);
         } catch (error) {
             console.error('Erro ao Buscar Pagamento:', error);
         }
@@ -24,8 +25,8 @@ const PaymentsTable = () => {
 
     const handleDelete = async (id: number) => {
         try {
-            await api.delete('/payment/'+id);
-            await listpayments();
+            await deletePayment(id);
+            await loadPayments();
         } catch (error) {
             console.error('Erro ao Remover Pagamento:', error);
         }
@@ -47,7 +48,7 @@ const PaymentsTable = () => {
     };
 
     const handleFormSubmit = () => {
-        listpayments();
+        loadPayments();
         setAddModalOpen(false);
         setEditModalOpen(false);
     };
@@ -62,7 +63,7 @@ const PaymentsTable = () => {
     };
 
     useEffect(() => {
-        listpayments();
+        loadPayments();
     }, []);
 
     return (

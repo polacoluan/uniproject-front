@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask';
-import api from '../../services/api';
+import { createPayment } from '../../services/payment/create-payment';
+import { updatePayment } from '../../services/payment/update-payment';
 import { Payment } from '../../types/payment';
 import SelectStudents from "../selects/select-students"
 import SelectPaymentMethods from "../selects/select-payment-methods"
@@ -46,9 +47,9 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ payment, onSuccess }) => {
         event.preventDefault();
         try {
             if (payment) {
-                await api.patch('/payment/'+payment.id, formData);
+                await updatePayment(payment.id, formData);
             } else {
-                await api.post('/payment/', formData);
+                await createPayment(formData);
             }
             onSuccess();
         } catch (error) {

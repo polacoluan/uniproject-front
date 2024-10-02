@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import api from '../../services/api';
 import { Installment } from '../../types/installment';
+import { updateInstallment } from '../../services/installment/update-installment';
 
 interface InstallmentFormProps {
   installment?: Installment;
@@ -44,9 +44,7 @@ const InstallmentForm: React.FC<InstallmentFormProps> = ({ installment, onSucces
     event.preventDefault();
     try {
       if (installment) {
-        await api.patch('/installment/'+installment.id, formData);
-      } else {
-        await api.post('/installment/',formData);
+        await updateInstallment(installment.id, formData);
       }
       onSuccess(); // Notify parent component
     } catch (error) {

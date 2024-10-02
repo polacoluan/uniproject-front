@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import api from '../../services/api';
+import { listPaymentMethods } from '../../services/payment-method/list-payment-methods';
 
 interface DataOption {
   id: number;
@@ -19,8 +19,8 @@ const SelectPaymentMethods: React.FC<SelectComponentProps> = ({ onSelect, value 
 
   useEffect(() => {
     const loadOptions = async () => {
-      const response = await api.get('/payment-methods/');
-      setOptions(response.data.data);
+      const response = await listPaymentMethods();
+      setOptions(response);
     };
 
     loadOptions();

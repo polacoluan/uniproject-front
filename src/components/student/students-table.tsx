@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { Student } from '../../types/student';
 import CustomModal from '../modal/modal';
 import StudentForm from '../student/student-form';
-import api from '../../services/api';
+import { listStudents } from '../../services/student/list-students';
+import { deleteStudent } from '../../services/student/delete-student';
 
 const StudentsTable = () => {
     const [students, setStudents] = useState<Student[]>([]);
@@ -12,21 +13,19 @@ const StudentsTable = () => {
     const [isEditModalOpen, setEditModalOpen] = useState(false);
     const [currentStudent, setCurrentStudent] = useState<Student | null>(null);
 
-    // List students
-    const listStudents = async () => {
+    const loadStudents = async () => {
         try {
-            const response = await api.get('/student/');
-            setStudents(response.data.data);
+            const response = await listStudents();
+            setStudents(response);
         } catch (error) {
             console.error('Erro ao Buscar Estudantes:', error);
         }
     };
 
-    // Handle delete
     const handleDelete = async (id: number) => {
         try {
-            await api.delete('/student/'+ id);
-            await listStudents();
+            await deleteStudent(id);
+            await loadStudents();
         } catch (error) {
             console.error('Erro ao Remover Estudante:', error);
         }
@@ -48,13 +47,13 @@ const StudentsTable = () => {
     };
 
     const handleFormSubmit = () => {
-        listStudents();
+        loadStudents();
         setAddModalOpen(false);
         setEditModalOpen(false);
     };
 
     useEffect(() => {
-        listStudents();
+        loadStudents();
     }, []);
 
     return (
@@ -103,13 +102,11 @@ const StudentsTable = () => {
                 </tbody>
             </table>
 
-            {/* Add Modal */}
             <CustomModal isOpen={isAddModalOpen} onRequestClose={closeModal}>
                 <h2 className="text-xl font-bold mb-4 text-center">Adicionar Estudante</h2>
                 <StudentForm onSuccess={handleFormSubmit} />
             </CustomModal>
 
-            {/* Edit Modal */}
             <CustomModal isOpen={isEditModalOpen} onRequestClose={closeModal}>
                 <h2 className="text-xl font-bold mb-4 text-center">Editar Estudante</h2>
                 {currentStudent && <StudentForm student={currentStudent} onSuccess={handleFormSubmit} />}
