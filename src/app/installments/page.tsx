@@ -1,4 +1,5 @@
-import InstallmentsTable from '../components/installment/InstallmentTable';
+import React from 'react';
+import InstallmentsTable from '../../components/installment/installment-table';
 
 const InstallmentPage = () => (
   <div className="container mx-auto">

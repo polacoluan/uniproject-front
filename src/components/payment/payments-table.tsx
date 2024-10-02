@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { PaymentTable } from '../../types/payment_table';
+import { PaymentTable } from '../../types/payment-table';
 import { Payment } from '../../types/payment';
-import CustomModal from '../modal/Modal';
-import PaymentForm from './PaymentForm';
+import CustomModal from '../modal/modal';
+import PaymentForm from './payment-form';
 import api from '../../services/api';
 
 const PaymentsTable = () => {
